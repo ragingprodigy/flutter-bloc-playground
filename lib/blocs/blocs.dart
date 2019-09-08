@@ -4,3 +4,4 @@ export 'weather/bloc.dart';
 export 'theme/bloc.dart';
 export 'settings/bloc.dart';
 export 'navigation/bloc.dart';
+export 'todos/bloc.dart';
