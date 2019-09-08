@@ -3,7 +3,7 @@ import 'package:flutter_timer/models/models.dart';
 import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_timer/blocs/blocs.dart';
-import 'package:flutter_timer/blocs/filtered_todos/filtered_todos.dart';
+import 'package:flutter_timer/blocs/todos/filtered_todos/filtered_todos.dart';
 
 
 class FilteredTodosBloc extends Bloc<FilteredTodosEvent, FilteredTodosState> {
