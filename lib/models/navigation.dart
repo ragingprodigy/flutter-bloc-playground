@@ -2,5 +2,5 @@ enum NavModule {
   timer,
   infinite_list,
   weather,
-  // todos,
+  todos,
 }

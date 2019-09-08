@@ -7,6 +7,8 @@ import 'package:flutter_timer/repositories/repositories.dart';
 import 'package:flutter_timer/utils/utils.dart';
 import 'package:http/http.dart' as http;
 import 'package:bloc/bloc.dart';
+import 'package:todos_repository_simple/todos_repository_simple.dart';
+import 'package:path_provider/path_provider.dart';
 
 void main() {
   BlocSupervisor.delegate = SimpleBlocDelegate();
@@ -23,6 +25,13 @@ void main() {
     postsApiClient: PostsApiClient(
       httpClient: httpClient
     )
+  );
+
+  const TodosRepositoryFlutter todosRepository = const TodosRepositoryFlutter(
+    fileStorage: const FileStorage(
+      '__flutter_bloc_app__',
+      getApplicationDocumentsDirectory,
+    ),
   );
 
   runApp(
@@ -46,8 +55,14 @@ void main() {
         BlocProvider<PostBloc>(
           builder: (context) => PostBloc(postsRepository: postsRepository),
         ),
+        BlocProvider<TodosBloc>(
+          builder: (context) => TodosBloc(todosRepository: todosRepository)
+        ),
+        BlocProvider<TabBloc>(
+          builder: (context) => TabBloc(),
+        ),
       ],
-      child: App(postsRepository: postsRepository, weatherRepository: weatherRepository),
+      child: App(),
     )
   );
 }

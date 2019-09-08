@@ -13,13 +13,13 @@ class HomeScreen extends StatelessWidget {
     return BlocBuilder<TabBloc, AppTab>(
       builder: (context, activeTab) {
         return Scaffold(
-          appBar: AppBar(
-            title: Text(FlutterBlocLocalizations.of(context).appTitle),
-            actions: <Widget>[
-              FilterButton(visible: activeTab == AppTab.todos),
-              ExtraActions(),
-            ],
-          ),
+          // appBar: AppBar(
+          //   title: Text(FlutterBlocLocalizations.of(context).appTitle),
+          //   actions: <Widget>[
+          //     FilterButton(visible: activeTab == AppTab.todos),
+          //     ExtraActions(),
+          //   ],
+          // ),
           body: activeTab == AppTab.todos ? FilteredTodos() : Stats(),
           floatingActionButton: FloatingActionButton(
             key: ArchSampleKeys.addTodoFab,

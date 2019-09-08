@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_timer/blocs/blocs.dart';
 import 'package:flutter_timer/models/models.dart';
-import 'package:flutter_timer/repositories/repositories.dart';
+import 'package:flutter_timer/screens/todos/todo_screens.dart';
 import 'package:flutter_timer/widgets/widgets.dart' as widgets;
 
 class DrawerItem {
@@ -14,25 +14,25 @@ class DrawerItem {
 }
 
 class DrawerWidget extends StatefulWidget {
-  final WeatherRepository weatherRepository;
-  final PostsRepository postsRepository;
-
   final drawerItems = [
     DrawerItem('Timer', Icons.timer, NavModule.timer),
     DrawerItem('Infinite List', Icons.list, NavModule.infinite_list),
     DrawerItem('Weather', Icons.cloud, NavModule.weather),
+    DrawerItem('Todos', Icons.track_changes, NavModule.todos),
   ];
-
-  DrawerWidget({Key key, @required this.weatherRepository, @required this.postsRepository})
-    : assert(null != weatherRepository),
-      assert(null != postsRepository),
-      super(key: key);
 
   DrawerState createState() => DrawerState();
 }
 
 class DrawerState extends State<DrawerWidget> {
   int _selectedDrawerIndex = 0;
+  TodosBloc todosBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    todosBloc = BlocProvider.of<TodosBloc>(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class DrawerState extends State<DrawerWidget> {
         new ListTile(
           leading: new Icon(d.icon),
           title: new Text(d.title),
-          // selected: i == _selectedDrawerIndex,
+          selected: i == _selectedDrawerIndex,
           onTap: () {
             _selectedDrawerIndex = i;
             navigationBloc.dispatch(SelectModule(module: d.module));
@@ -55,49 +55,65 @@ class DrawerState extends State<DrawerWidget> {
       );
     }
 
-
     return BlocListener<NavigationBloc, NavModule>(
       listener: (context, navModule) {
         Navigator.of(context).pop();
       },
       child: BlocBuilder<NavigationBloc, NavModule>(
         builder: (context, activeModule) {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(widget.drawerItems[_selectedDrawerIndex].title),
-              actions: activeModule == NavModule.weather ? [
-                IconButton(
-                  icon: Icon(Icons.settings),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => widgets.Settings(),
-                      )
-                    );
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () async {
-                    final city = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => widgets.CitySelection(),
-                      ),
-                    );
+          return BlocBuilder<TabBloc, AppTab>(
+            builder: (context, activeTab) {
+              List<Widget> appBarActions = [];
 
-                    if (null != city) {
-                      weatherBloc.dispatch(FetchWeather(city: city));
-                    }
-                  },
-                )
-              ] : [],
-            ),
-            body: _getItemWidget(activeModule),
-            drawer: Drawer(
-              child: ListView(children: drawerOptions),
-            ),
+              if (activeModule == NavModule.weather) {
+                appBarActions.addAll([
+                  IconButton(
+                      icon: Icon(Icons.settings),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => widgets.Settings(),
+                          )
+                        );
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.search),
+                      onPressed: () async {
+                        final city = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => widgets.CitySelection(),
+                          ),
+                        );
+
+                        if (null != city) {
+                          weatherBloc.dispatch(FetchWeather(city: city));
+                        }
+                      },
+                    )
+                ]);
+              }
+
+              if (activeModule == NavModule.todos && activeTab == AppTab.todos) {
+                appBarActions.addAll([
+                  widgets.FilterButton(visible: activeTab == AppTab.todos),
+                  widgets.ExtraActions(),
+                ]);
+              }
+
+              return Scaffold(
+                appBar: AppBar(
+                  title: Text(widget.drawerItems[_selectedDrawerIndex].title),
+                  actions: appBarActions,
+                ),
+                body: _getItemWidget(activeModule),
+                drawer: Drawer(
+                  child: ListView(children: drawerOptions),
+                ),
+              );
+            }
           );
         },
       ),
@@ -118,6 +134,10 @@ class DrawerState extends State<DrawerWidget> {
         return BlocBuilder<WeatherBloc, WeatherState>(
           builder: (context, state) => widgets.Weather()
         );
+        break;
+      case NavModule.todos:
+        todosBloc.dispatch(LoadTodos());
+        return HomeScreen();
         break;
     }
   }
