@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_timer/bloc/settings/bloc.dart';
+import 'package:flutter_timer/blocs/settings/bloc.dart';
 import 'package:flutter_timer/models/models.dart' as model;
 import 'weather_conditions.dart';
 import 'temperature.dart';

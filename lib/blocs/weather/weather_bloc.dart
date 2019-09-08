@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:flutter_timer/bloc/weather/bloc.dart';
+import 'package:flutter_timer/blocs/weather/bloc.dart';
 import 'package:flutter_timer/models/models.dart';
 import 'package:flutter_timer/repositories/repositories.dart';
 import 'package:meta/meta.dart';

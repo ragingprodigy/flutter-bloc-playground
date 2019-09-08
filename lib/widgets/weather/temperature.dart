@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_timer/bloc/blocs.dart';
+import 'package:flutter_timer/blocs/blocs.dart';
 
 class Temperature extends StatelessWidget {
   final double temperature;

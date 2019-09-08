@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_timer/bloc/post/bloc.dart';
+import 'package:flutter_timer/blocs/post/bloc.dart';
 import 'package:flutter_timer/repositories/repositories.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';

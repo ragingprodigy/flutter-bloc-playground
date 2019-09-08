@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
-import 'package:flutter_timer/bloc/timer/bloc.dart';
+import 'package:flutter_timer/blocs/timer/bloc.dart';
 import 'package:flutter_timer/utils/ticker.dart';
 
 class TimerBloc extends Bloc<TimerEvent, TimerState> {
