@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 abstract class FilteredTodosEvent extends Equatable {
-  FilteredTodosEvent([List props = const <dynamic>[]]) : super(props);
+  FilteredTodosEvent([List props = const <dynamic>[]]) : super();
 }
 
 class UpdateFilter extends FilteredTodosEvent {
@@ -14,6 +14,9 @@ class UpdateFilter extends FilteredTodosEvent {
 
   @override
   String toString() => 'UpdateFilter { filter: $filter }';
+  
+  @override
+  List<Object> get props => [filter];
 }
 
 class UpdateTodos extends FilteredTodosEvent {
@@ -23,4 +26,7 @@ class UpdateTodos extends FilteredTodosEvent {
 
   @override
   String toString() => 'UpdateTodos { todos: $todos }';
+  
+  @override
+  List<Object> get props => [todos];
 }

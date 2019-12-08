@@ -13,7 +13,7 @@ class DrawerItem {
   DrawerItem(this.title, this.icon, this.module);
 }
 
-class DrawerWidget extends StatefulWidget {
+class DrawerWidget extends StatelessWidget{
   final drawerItems = [
     DrawerItem('Timer', Icons.timer, NavModule.timer),
     DrawerItem('Infinite List', Icons.list, NavModule.infinite_list),
@@ -21,27 +21,28 @@ class DrawerWidget extends StatefulWidget {
     DrawerItem('Todos', Icons.track_changes, NavModule.todos),
   ];
 
-  DrawerState createState() => DrawerState();
-}
+  // DrawerState createState() => DrawerState();
+// }
 
-class DrawerState extends State<DrawerWidget> {
-  int _selectedDrawerIndex = 0;
-  TodosBloc todosBloc;
+// class DrawerState extends State<DrawerWidget> {
+  // TodosBloc todosBloc;
 
-  @override
-  void initState() {
-    super.initState();
-    todosBloc = BlocProvider.of<TodosBloc>(context);
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   todosBloc = BlocProvider.of<TodosBloc>(context);
+  // }
 
   @override
   Widget build(BuildContext context) {
+    TodosBloc todosBloc = BlocProvider.of<TodosBloc>(context);
     var drawerOptions = <Widget>[];
+    int _selectedDrawerIndex = 0;
     final NavigationBloc navigationBloc = BlocProvider.of<NavigationBloc>(context);
     final WeatherBloc weatherBloc = BlocProvider.of<WeatherBloc>(context);
 
-    for (var i = 0; i < widget.drawerItems.length; i++) {
-      var d = widget.drawerItems[i];
+    for (var i = 0; i < drawerItems.length; i++) {
+      var d = drawerItems[i];
       drawerOptions.add(
         new ListTile(
           leading: new Icon(d.icon),
@@ -50,6 +51,7 @@ class DrawerState extends State<DrawerWidget> {
           onTap: () {
             _selectedDrawerIndex = i;
             navigationBloc.dispatch(SelectModule(module: d.module));
+            Navigator.of(context).pop();
           },
         )
       );
@@ -57,7 +59,7 @@ class DrawerState extends State<DrawerWidget> {
 
     return BlocListener<NavigationBloc, NavModule>(
       listener: (context, navModule) {
-        Navigator.of(context).pop();
+        // Navigator.of(context).pop();
       },
       child: BlocBuilder<NavigationBloc, NavModule>(
         builder: (context, activeModule) {
@@ -105,10 +107,10 @@ class DrawerState extends State<DrawerWidget> {
 
               return Scaffold(
                 appBar: AppBar(
-                  title: Text(widget.drawerItems[_selectedDrawerIndex].title),
+                  title: Text(drawerItems[_selectedDrawerIndex].title),
                   actions: appBarActions,
                 ),
-                body: _getItemWidget(activeModule),
+                body: _getItemWidget(todosBloc, activeModule),
                 drawer: Drawer(
                   child: ListView(children: drawerOptions),
                 ),
@@ -120,7 +122,7 @@ class DrawerState extends State<DrawerWidget> {
     );
   }
 
-  _getItemWidget(NavModule module) {
+  _getItemWidget(TodosBloc todosBloc, NavModule module) {
     switch (module) {
       case NavModule.timer:
         return widgets.Timer();
@@ -141,5 +143,4 @@ class DrawerState extends State<DrawerWidget> {
         break;
     }
   }
-
 }

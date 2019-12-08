@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
 
 enum WeatherCondition {
   snow,
@@ -14,6 +15,7 @@ enum WeatherCondition {
   unknown
 }
 
+@immutable
 class Weather extends Equatable {
   final WeatherCondition condition;
   final String formattedCondition;
@@ -35,17 +37,7 @@ class Weather extends Equatable {
     this.created,
     this.lastUpdated,
     this.location
-  }) : super([
-    condition,
-    formattedCondition,
-    minTemp,
-    temp,
-    maxTemp,
-    locationId,
-    created,
-    lastUpdated,
-    location,
-  ]);
+  }) : super();
 
   static Weather fromJson(dynamic json) {
     final consolidatedWeather = json['consolidated_weather'][0];
@@ -101,4 +93,17 @@ class Weather extends Equatable {
 
     return state;
   }
+
+  @override
+  List<Object> get props => [
+    condition,
+    formattedCondition,
+    minTemp,
+    temp,
+    maxTemp,
+    locationId,
+    created,
+    lastUpdated,
+    location,
+  ];
 }

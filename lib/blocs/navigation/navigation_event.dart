@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 abstract class NavigationEvent extends Equatable {
-  NavigationEvent([List props = const <dynamic>[]]) : super(props);
+  NavigationEvent([List props = const <dynamic>[]]) : super();
 }
 
 class SelectModule extends NavigationEvent {
@@ -13,5 +13,8 @@ class SelectModule extends NavigationEvent {
   SelectModule({@required this.module})
     : assert(null != module),
       super([module]);
+
+  @override
+  List<Object> get props => [module];
 }
 

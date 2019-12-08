@@ -9,6 +9,9 @@ class ThemeState extends Equatable {
   ThemeState({@required this.theme, @required this.color})
     : assert(null != theme),
       assert(null != color),
-      super([theme, color]);
-}
+      super();
 
+  @override
+  // TODO: implement props
+  List<Object> get props => [theme, color];
+}

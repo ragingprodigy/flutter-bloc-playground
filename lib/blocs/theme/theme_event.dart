@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 abstract class ThemeEvent extends Equatable {
-  ThemeEvent([List props = const <dynamic>[]]) : super(props);
+  ThemeEvent([List props = const <dynamic>[]]) : super();
 }
 
 class WeatherChanged extends ThemeEvent {
@@ -12,5 +12,9 @@ class WeatherChanged extends ThemeEvent {
 
   WeatherChanged({@required this.condition})
     : assert(null != condition),
-      super([condition]);
+      super();
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [condition];
 }

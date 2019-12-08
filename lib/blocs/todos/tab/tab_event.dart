@@ -4,7 +4,7 @@ import 'package:flutter_timer/models/models.dart';
 
 @immutable
 abstract class TabEvent extends Equatable {
-  TabEvent([List props = const []]) : super(props);
+  TabEvent([List props = const []]) : super();
 }
 
 class UpdateTab extends TabEvent {
@@ -14,4 +14,7 @@ class UpdateTab extends TabEvent {
 
   @override
   String toString() => 'UpdateTab { tab: $tab }';
+  
+  @override
+  List<Object> get props => [tab];
 }

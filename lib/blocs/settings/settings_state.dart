@@ -8,5 +8,9 @@ class SettingsState extends Equatable {
 
   SettingsState({@required this.temperatureUnits})
     : assert(null != temperatureUnits),
-      super([temperatureUnits]);
+      super();
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [temperatureUnits];
 }

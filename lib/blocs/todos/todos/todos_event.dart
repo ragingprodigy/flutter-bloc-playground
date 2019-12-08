@@ -4,7 +4,10 @@ import 'package:meta/meta.dart';
 
 @immutable
 abstract class TodosEvent extends Equatable {
-  TodosEvent([List props = const <dynamic>[]]) : super(props);
+  TodosEvent([List props = const <dynamic>[]]) : super();
+
+  @override
+  List<Object> get props => [];
 }
 
 class LoadTodos extends TodosEvent {
@@ -19,6 +22,9 @@ class AddTodo extends TodosEvent {
 
   @override
   String toString() => 'AddTodo { todo: $todo }';
+  
+  @override
+  List<Object> get props => [todo];
 }
 
 class UpdateTodo extends TodosEvent {
@@ -28,6 +34,9 @@ class UpdateTodo extends TodosEvent {
 
   @override
   String toString() => 'UpdateTodo { updatedTodo: $updatedTodo }';
+  
+  @override
+  List<Object> get props => [updatedTodo];
 }
 
 class DeleteTodo extends TodosEvent {
@@ -37,6 +46,9 @@ class DeleteTodo extends TodosEvent {
 
   @override
   String toString() => 'DeleteTodo { todo: $todo }';
+  
+  @override
+  List<Object> get props => [todo];
 }
 
 class ClearCompleted extends TodosEvent {

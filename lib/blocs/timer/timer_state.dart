@@ -6,7 +6,10 @@ abstract class TimerState extends Equatable {
   final int duration;
 
   TimerState(this.duration, [List props = const []])
-    : super([duration]..addAll(props));
+    : super();
+  
+  @override
+  List<Object> get props => [duration]..addAll(props);
 }
 
 class Ready extends TimerState {

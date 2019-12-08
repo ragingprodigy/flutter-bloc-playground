@@ -4,7 +4,10 @@ import 'package:meta/meta.dart';
 
 @immutable
 abstract class FilteredTodosState extends Equatable {
-  FilteredTodosState([List props = const <dynamic>[]]) : super(props);
+  FilteredTodosState([List props = const <dynamic>[]]) : super();
+  
+  @override
+  List<Object> get props => [];
 }
 
 class FilteredTodosLoading extends FilteredTodosState {
@@ -23,4 +26,7 @@ class FilteredTodosLoaded extends FilteredTodosState {
   String toString() {
     return 'FilteredTodosLoaded { filteredTodos: $filteredTodos, activeFilter: $activeFilter }';
   }
+  
+  @override
+  List<Object> get props => [filteredTodos, activeFilter];
 }

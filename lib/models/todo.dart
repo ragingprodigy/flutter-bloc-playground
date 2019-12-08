@@ -13,7 +13,7 @@ class Todo extends Equatable {
   Todo(this.task, { this.complete = false, String note = '', String id})
     : this.note = note ?? '',
       this.id = id ?? Uuid().generateV4(),
-      super([complete, id, note, task]);
+      super();
 
   Todo copyWith({bool complete, String id, String note, String task}) {
     return Todo(
@@ -41,4 +41,7 @@ class Todo extends Equatable {
       id: entity.id ?? Uuid().generateV4(),
     );
   }
+
+  @override
+  List<Object> get props => [complete, id, note, task];
 }

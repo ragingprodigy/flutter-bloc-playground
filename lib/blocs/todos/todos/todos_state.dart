@@ -4,7 +4,10 @@ import 'package:meta/meta.dart';
 
 @immutable
 abstract class TodosState extends Equatable {
-  TodosState([List props = const <dynamic>[]]) : super(props);
+  const TodosState();
+
+  @override
+  List<Object> get props => [];
 }
 
 class TodosLoading extends TodosState {
@@ -15,7 +18,10 @@ class TodosLoading extends TodosState {
 class TodosLoaded extends TodosState {
   final List<Todo> todos;
 
-  TodosLoaded([this.todos = const []]) : super([todos]);
+  TodosLoaded([this.todos = const []]);
+
+  @override
+  List<Object> get props => [todos];
   
   @override
   String toString() => 'TodosLoaded { todos: $todos }';

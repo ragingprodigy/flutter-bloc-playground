@@ -44,7 +44,7 @@ class App extends StatelessWidget {
               return AddEditScreen(
                 key: ArchSampleKeys.addTodoScreen,
                 onSave: (task, note) {
-                  todosBloc.dispatch(
+                  todosBloc.add(
                     AddTodo(Todo(task, note: note)),
                   );
                 },

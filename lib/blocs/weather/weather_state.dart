@@ -4,7 +4,10 @@ import 'package:meta/meta.dart';
 
 @immutable
 abstract class WeatherState extends Equatable {
-  WeatherState([List props = const <dynamic>[]]) : super(props);
+  WeatherState([List props = const <dynamic>[]]) : super();
+
+  @override
+  List<Object> get props => [];
 }
 
 class WeatherEmpty extends WeatherState {}
@@ -17,6 +20,9 @@ class WeatherLoaded extends WeatherState {
   WeatherLoaded({@required this.weather})
     : assert(null != weather),
       super([weather]);
+
+  @override
+  List<Object> get props => [weather];
 }
 
 class WeatherError extends WeatherState {}
